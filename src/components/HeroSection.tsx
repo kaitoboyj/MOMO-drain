@@ -1,10 +1,22 @@
 import { Button } from "@/components/ui/button";
+import { NavLink } from "@/components/NavLink";
 import momoLogo from "@/assets/momo-logo.jpg";
 import momoPlayful from "@/assets/momo-playful.png";
 
 export const HeroSection = () => {
   return (
     <div className="relative min-h-[600px] flex flex-col items-center justify-center text-center px-4 py-16">
+      {/* Navigation */}
+      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
+        <div className="container mx-auto flex justify-between items-center">
+          <div className="text-2xl font-bold text-momo-pink">MOMO</div>
+          <div className="flex gap-4">
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/charity">Charity</NavLink>
+          </div>
+        </div>
+      </nav>
+
       {/* Floating MOMO decorations */}
       <img
         src={momoPlayful}
