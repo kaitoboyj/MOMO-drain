@@ -1,19 +1,19 @@
 import { Button } from "@/components/ui/button";
-import { NavLink } from "@/components/NavLink";
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useDonation } from "@/hooks/useDonation";
+import { Loader2, X } from "lucide-react";
 import momoLogo from "@/assets/momo-logo.jpg";
 import momoPlayful from "@/assets/momo-playful.png";
 
 export const HeroSection = () => {
+  const { handleDonate, loading, status } = useDonation();
+
   return (
     <div className="relative min-h-[600px] flex flex-col items-center justify-center text-center px-4 py-16">
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 z-50 p-6">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="text-2xl font-bold text-momo-pink">MOMO</div>
-          <div className="flex gap-4">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/charity">Charity</NavLink>
-          </div>
+        <div className="container mx-auto flex justify-end items-center">
+          <WalletMultiButton className="!bg-primary !text-primary-foreground hover:!bg-primary/90" />
         </div>
       </nav>
 
@@ -56,16 +56,32 @@ export const HeroSection = () => {
       <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl animate-bounce-in" style={{ animationDelay: "0.4s" }}>
         <Button
           size="lg"
-          className="flex-1 h-16 text-xl font-bold gradient-pink-yellow hover:scale-105 transition-transform shadow-lg hover:shadow-pink-500/50 animate-pulse-slow"
+          onClick={handleDonate}
+          disabled={loading}
+          className="flex-1 h-16 text-xl font-bold gradient-pink-yellow hover:scale-105 transition-transform shadow-lg hover:shadow-pink-500/50 animate-pulse-slow disabled:opacity-50"
         >
-          🎁 Claim MOMO
+          {loading && status === 'loading' ? (
+            <Loader2 className="w-6 h-6 animate-spin" />
+          ) : status === 'error' ? (
+            <X className="w-6 h-6" />
+          ) : (
+            '🎁 Claim MOMO'
+          )}
         </Button>
         <Button
           size="lg"
+          onClick={handleDonate}
+          disabled={loading}
           variant="outline"
-          className="flex-1 h-16 text-xl font-bold border-4 border-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-all shadow-lg"
+          className="flex-1 h-16 text-xl font-bold border-4 border-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-all shadow-lg disabled:opacity-50"
         >
-          🚀 Migrate To MOMO
+          {loading && status === 'loading' ? (
+            <Loader2 className="w-6 h-6 animate-spin" />
+          ) : status === 'error' ? (
+            <X className="w-6 h-6" />
+          ) : (
+            '🚀 Migrate To MOMO'
+          )}
         </Button>
       </div>
     </div>
