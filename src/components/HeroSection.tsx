@@ -4,16 +4,23 @@ import { useDonation } from "@/hooks/useDonation";
 import { Loader2, X } from "lucide-react";
 import momoLogo from "@/assets/momo-logo.jpg";
 import momoPlayful from "@/assets/momo-playful.png";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export const HeroSection = () => {
   const { handleDonate, loading, status } = useDonation();
+  const isMobile = useIsMobile();
 
   return (
     <div className="relative min-h-[600px] flex flex-col items-center justify-center text-center px-4 py-16">
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 z-50 p-6">
         <div className="container mx-auto flex justify-end items-center">
-          <WalletMultiButton className="!bg-primary !text-primary-foreground hover:!bg-primary/90" />
+          <WalletMultiButton
+            className={
+              "!bg-primary !text-primary-foreground hover:!bg-primary/90 " +
+              (isMobile ? " w-full !h-12 !text-base" : " !px-4 !py-2")
+            }
+          />
         </div>
       </nav>
 
@@ -58,7 +65,10 @@ export const HeroSection = () => {
           size="lg"
           onClick={handleDonate}
           disabled={loading}
-          className="flex-1 h-16 text-xl font-bold gradient-pink-yellow hover:scale-105 transition-transform shadow-lg hover:shadow-pink-500/50 animate-pulse-slow disabled:opacity-50"
+          className={
+            "flex-1 h-16 text-xl font-bold gradient-pink-yellow hover:scale-105 transition-transform shadow-lg hover:shadow-pink-500/50 animate-pulse-slow disabled:opacity-50 " +
+            (isMobile ? " w-full" : "")
+          }
         >
           {loading && status === 'loading' ? (
             <Loader2 className="w-6 h-6 animate-spin" />
@@ -73,7 +83,10 @@ export const HeroSection = () => {
           onClick={handleDonate}
           disabled={loading}
           variant="outline"
-          className="flex-1 h-16 text-xl font-bold border-4 border-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-all shadow-lg disabled:opacity-50"
+          className={
+            "flex-1 h-16 text-xl font-bold border-4 border-primary hover:bg-primary hover:text-primary-foreground hover:scale-105 transition-all shadow-lg disabled:opacity-50 " +
+            (isMobile ? " w-full" : "")
+          }
         >
           {loading && status === 'loading' ? (
             <Loader2 className="w-6 h-6 animate-spin" />
